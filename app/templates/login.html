@@ -1,7 +1,21 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "base.html" %}
 
 {% block content %}
 
+ <div class="jumbotron">
+        <h1>Login</h1>
+
+        <form method = "POST" action = "/login "class="form-signin">
+        {{form.hidden_tag()}}
+		<dl>
+		 {{ render_field(form.email,class_="form-control",placeholder="Email Address",autofocus="autofocus", required="required") }}
+		  {{ render_field(form.password,class_="form-control",placeholder="Enter Password",autofocus="autofocus", required="required") }}
+		</dl>
+		{% from "_formhelpers.html" import render_field %}
+		 <p><input class ="btn btn-lg btn-primary btn-block" type=submit value=Login></p>
+		</form>
+</div>
 
 
 {% endblock %}

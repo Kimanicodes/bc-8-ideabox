@@ -1,12 +1,26 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "base.html" %}
 
 {% block content %}
 
-<div class="jumbotron">
-            <h1>IdeaBox App</h1>
-            <p class="lead"></p>
-            <p><a class="btn btn-lg btn-success" href="#" role="button">Sign Up Now</a>
-            </p>
-        </div>
+      <div class="jumbotron">
+        <h1>Register Now!</h1>
+
+        <form method = "POST" action = "/signup "class="form-signin">
+        {{form.hidden_tag()}}
+		<dl>
+		  	{{ render_field(form.first_name,class_="form-control",placeholder="First Name",autofocus="autofocus", required="required") }}
+		  	{{ render_field(form.last_name,class_="form-control",placeholder="Last Name",autofocus="autofocus", required="required") }}
+		    {{ render_field(form.username,class_="form-control",placeholder="User Name",autofocus="autofocus", required="required") }}
+		    {{ render_field(form.email,class_="form-control",placeholder="Email Address",autofocus="autofocus", required="required") }}
+		    {{ render_field(form.password, class_="form-control",placeholder="Password",autofocus="autofocus", required="required") }}
+		    {{ render_field(form.confirm,class_="form-control",placeholder="Confirm Password",autofocus="autofocus", required="required") }}
+		    {{ render_field(form.accept_tos,required="required") }}
+		  </dl>
+
+		  	{% from "_formhelpers.html" import render_field %}
+		  <p><input class ="btn btn-lg btn-primary btn-block" type=submit value=Register>
+		</form>
+      </div>
  
 {% endblock %}

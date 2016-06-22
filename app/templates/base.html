@@ -19,11 +19,11 @@
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Home</a>
+                    <li role="presentation" class="active"><a href = "{{ url_for('view_homepage')}}">Home</a>
                     </li>
                     <li role="presentation"><a href="#">Sign In</a>
                     </li>
-                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    <li role="presentation"><a href = "{{ url_for('register')}}">Sign Up</a>
                     </li>
                 </ul>
             </nav>
@@ -33,7 +33,7 @@
         {% endblock %}
 
         <footer class="footer">
-            <p>&copy;2016</p>Design by<a href="https.www.kimanindegwa.co.ke">Mr. Kimani Ndegwa </a>
+            <p>&copy;2016</p>Design by<a href="https://www.kimanindegwa.co.ke" target="__blank">Mr. Kimani Ndegwa </a>
         </footer>
  
     </div>

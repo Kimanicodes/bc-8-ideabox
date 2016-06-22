@@ -7,17 +7,25 @@ app = Flask(__name__)
 def view_homepage():
     return render_template('index.html')
 
+@app.route('/about')
+def view_about():
+	return render_template('about.html')
 
-@app.route('/showSignUp', methods=['GET', 'POST'])
+
+@app.route('/signup')
 def register():
-    form = ShowSignUp(request.form)
-    if request.method == 'POST' and form.validate():
-        user = User(form.username.data, form.first_name.data,form.last_name.data,form.email.data,
-                    form.password.data)
-        db_session.add(user)
-        flash('Thank You for registering!')
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
+    return render_template('signup.html')
+
+
+
+    #form = ShowSignUp(request.form)
+    #if request.method == 'POST' and form.validate():
+    #    user = User(form.username.data, form.first_name.data,form.last_name.data,form.email.data,
+    #                form.password.data)
+    #    db_session.add(user)
+    #    flash('Thank You for registering!')
+    #    return redirect(url_for('login'))
+    #return render_template('register.html', form=form)
 
 if __name__ == "__main__":
-	app.run(debug = True)
+    app.run(debug = True)

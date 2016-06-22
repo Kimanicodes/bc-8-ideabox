@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title> IdeaBox App</title>
+ 
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet
+    ">
+    <link href = "{{url_for('static', filename='css/main.css')}}" rel ='stylesheet'>
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                    <li role="presentation"><a href="#">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Python IdeaBox</h3>
+        </div>
+        {% block content %}
+        {% endblock %}
+
+        <footer class="footer">
+            <p>&copy;2016</p>Design by<a href="https.www.kimanindegwa.co.ke">Mr. Kimani Ndegwa </a>
+        </footer>
+ 
+    </div>
+</body>
+ 
+</html>

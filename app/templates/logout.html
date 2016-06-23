@@ -23,20 +23,15 @@
                     </li>
                     <li role="presentation"><a href="{{ url_for('login')}}">Log In</a>
                     </li>
-                    <li role="presentation"><a href = "{{ url_for('register')}}">Register</a>
+                    <li role="presentation"><a href = "{{ url_for('logout')}}">Log Out</a>
                     </li>
                 </ul>
             </nav>
             <h3 class="text-muted">Python IdeaBox</h3>
         </div>
-        {% block content %}
-        {% endblock %}
 
-        <footer class="footer">
-            <p>&copy;2016</p>Design by<a href="https://www.kimanindegwa.co.ke" target="__blank">Mr. Kimani Ndegwa </a>
-        </footer>
- 
-    </div>
-</body>
- 
-</html>
+
+
+
+
+{% endblock %}

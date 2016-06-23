@@ -1,8 +1,8 @@
 from flask import Flask, render_template, url_for, request, flash, redirect
 from models import db, User
 from forms import ShowSignUp, LoginForm
-from flask_login import LoginManager, login_user
-#from . import flask_login
+from flask_login import login_user, LoginManager
+#from . import flask_login  LoginManager
 from flask.ext.login import login_required
 
 
@@ -14,8 +14,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db.init_app(app)
 
 login_manager = LoginManager()
+login_manager.init_app(app)
+
+'''
+login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'login'
+'''
 
 app.secret_key = "development-key"
 
@@ -33,6 +38,7 @@ def view_homepage():
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
+    flash("Welcome to your dashboard!")
 
 
 @app.route('/about')
@@ -45,11 +51,24 @@ def login():
     form_log = LoginForm()
     if form_log.validate_on_submit():
         user = User.query.filter_by(email=form_log.email.data).first()
+        #import pdb; pdb.set_trace()
         if user is not None and user.check_password_hash(form_log.password.data):
             login_user(user, form_log.remember_me.data)
             return redirect(request.args.get('next') or url_for('dashboard'))
-        flash('Invalid username or password.')
+        else:
+            flash('Invalid username or password.')
     return render_template('login.html', form=form_log)
+
+@app.route('/logout', methods =['GET'])
+def logout():
+    """Logout the current user."""
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
+    logout_user()
+    return render_template("logout.html")
+
 
 
 
@@ -75,10 +94,10 @@ def register():
                     first_name=form.first_name.data,
                     last_name=form.last_name.data,
                     email=form.email.data,
-                    pwdhash=form.password.data)
+                    password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Thanks for registering')
+        flash('Thanks for registering. Please Login to continue!')
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 

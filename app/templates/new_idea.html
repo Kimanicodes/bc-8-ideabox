@@ -5,15 +5,15 @@
 
 
 <h1>New Idea?</h1>
-<form method = "POST" action = "/login "class="form-signin">
+<form method = "POST" action = "/new_idea" class="form-signin">
         {{form.hidden_tag()}}
 		<dl>
 		 {{ render_field(form.title,class_="form-control",placeholder="Enter Title",autofocus="autofocus", required="required", title = "Title") }}
-		  {{ render_field(form.category,class_="form-control",placeholder="Enter Category",autofocus="autofocus", required="required") }}
 		  {{ render_field(form.body,class_="form-control",placeholder="Body Goes here",autofocus="autofocus", required="required") }}
 		</dl>
 
 		<p><input class ="btn btn-lg btn-primary btn-block" type=submit value=Share>
 </form>
+
 
 {% endblock %}

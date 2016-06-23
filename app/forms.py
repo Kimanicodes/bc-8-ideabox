@@ -29,8 +29,7 @@ class LoginForm(Form):
 '''Idea Entry Form'''
 
 
-class Idea(Form):
-    title = StringField('Title', [validators.Length(min=10, max=35)])
-    category = StringField('Category', [validators.Length(min=10, max=35)])
-    body = StringField('Body', [validators.Length(min=100, max=350)])
+class IdeaForm(Form):
+    title = StringField('Title', [validators.Length(min=5, max=35)])
+    body = StringField('Body', [validators.Length(min=5, max=35)])
     submit = SubmitField('Submit')

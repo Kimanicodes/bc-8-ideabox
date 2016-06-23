@@ -2,7 +2,7 @@
 <html lang="en">
  
 <head>
-    <title> IdeaBox App</title>
+    <title>IdeaBox App</title>
  
  
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet
@@ -19,7 +19,6 @@
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href = "{{ url_for('view_homepage')}}">Home</a>
                     {% if not current_user.is_authenticated %}
                     </li>
                     <li role="presentation"><a href="{{ url_for('login')}}">Log In</a>
@@ -29,24 +28,27 @@
 
                     {% endif %}
                     {% if current_user.is_authenticated %}
+                    <li role="presentation" class="active"><a href = "{{ url_for('home')}}">Home</a>
                     <li role="presentation"><a href = "{{ url_for('new_idea')}}">Got an Idea?</a>
                     </li>
-                    <li role="presentation"><a href = "{{ url_for('feed')}}">Feed</a>
+                    <!--
+                    <li role="presentation"><a href = "{{ url_for('show')}}">Feed</a>
                     </li>
-                    <li role="presentation"><a href = "{{ url_for('feed')}}">My Feed</a>
+                    -->
+                    <li role="presentation"><a href = "{{ url_for('get_feed')}}">My Feed</a>
                     </li>
                     <li role="presentation"><a href = "{{ url_for('logout')}}">Log out</a>
                     </li>
                     {% endif %}
                 </ul>
             </nav>
-            <h3 class="text-muted">Python IdeaBox</h3>
+            <h3 class="text-muted">Le IdeaBox</h3>
         </div>
         {% block content %}
         {% endblock %}
 
         <footer class="footer">
-            <p>&copy;2016</p>Design by<a href="https://www.kimanindegwa.co.ke" target="__blank">Mr. Kimani Ndegwa </a>
+            <p>&copy;2016</p>Design by <a href="https://www.kimanindegwa.co.ke" target="__blank">Mr. Kimani Ndegwa </a>
         </footer>
  
     </div>

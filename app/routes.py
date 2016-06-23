@@ -1,6 +1,6 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, session
-from models import db, User
-from forms import ShowSignUp, LoginForm, Idea
+from flask import Flask, render_template, url_for, request, flash, redirect, session, abort
+from models import db, User, Idea
+from forms import ShowSignUp, LoginForm, IdeaForm
 from flask_login import login_user, LoginManager, login_required, UserMixin, current_user, logout_user
 # from . import flask_login  LoginManager
 
@@ -34,12 +34,25 @@ def view_homepage():
     return render_template('index.html')
 
 
-@app.route('/feed')
+@app.route('/show')
 @login_required
-def feed():
-    #flash('Please Login to continue!')
-    # return redirect(url_for('login'))
-    return render_template('Feed.html')
+def show():
+    pass
+   # #flash('Please Login to continue!')
+   # # return redirect(url_for('login'))
+   # form = Idea()
+   # #ideas = Idea.query.order_by(Idea.timestamp.desc()).all()
+   # if form.validate_on_submit():
+   #     idea = Idea(title=form.title.data,
+   #     body=form.body.data, category = form.category.data)
+   #     db.session.add(idea)
+   #     db.session.commit
+   #     ideas = Idea.query.order_by(Idea.timestamp.desc()).all()
+   #     return redirect(url_for('show'))
+   #     
+   # return render_template('show.html', form=form)
+
+
 
 
 @app.route('/about')
@@ -53,26 +66,42 @@ def login():
     if form_log.validate_on_submit():
 
         user = User.query.filter_by(email=form_log.email.data).first()
-        #import pdb; pdb.set_trace()
         if user is not None and user.check_password_hash(form_log.password.data):
             login_user(user, form_log.remember_me.data)
-            return redirect(request.args.get('next') or url_for('view_about'))
+            return redirect(request.args.get('next') or url_for('view_homepage'))
 
         else:
             flash('Invalid username or password.')
     return render_template('login.html', form=form_log)
 
 
+@app.route('/feed')
+@login_required
+def get_feed():
+    user_id = session.get('user_id')
+    if not user_id:
+        abort(403)
+    user = User.query.filter_by(id=int(user_id)).first()
+    ideas = user.ideas.all()
+    return render_template('Feed.html', ideas=ideas)
+
+
 @app.route('/new_idea', methods=['GET', 'POST'])
 @login_required
 def new_idea():
-    form = Idea()
-    if form.validate_on_submit():
+    form = IdeaForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        user_id = session.get('user_id')
+        if not user_id:
+            abort(403)
+        user = User.query.filter_by(id=int(user_id)).first()
         idea = Idea(title=form.title.data,
-                    category=form.category.data,
-                    body=form.body.data)
+                    body=form.body.data,
+                    user=user)
         db.session.add(idea)
         db.session.commit()
+        return redirect(url_for('get_feed'))
     return render_template('new_idea.html', form=form)
 
 
@@ -87,10 +116,10 @@ def logout():
     return redirect(url_for('view_homepage'))
 
 
-@app.route('/views')
+@app.route('/home')
 @login_required
-def secret():
-    return redirect(url_for('view_about'))
+def home():
+    return render_template('home.html')
 
 #@app.route('/secret')
 #@login_required

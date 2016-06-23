@@ -36,8 +36,12 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True)
     pwdhash = db.Column(db.String(54))
+    ideas = db.relationship('Idea', backref='user', lazy='dynamic')
 
-    def __init__(self, username, first_name, last_name, email, password):
+    def __init__(
+            self, username, first_name, last_name,
+            email, password, *args, **kwargs):
+        super(User, self).__init__(*args, **kwargs)
         self.username = username.lower()
         self.first_name = first_name
         self.last_name = last_name
@@ -68,23 +72,17 @@ class Idea(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text)
-    pub_date = db.Column(db.DateTime)
-
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship(
-        'Category', backref=db.backref('ideas', lazy='dynamic'))
-
+    pub_date = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('ideas', lazy='dynamic'))
 
-    def __init__(self, title, body, category, user, pub_date=None):
-        self.title = title
-        self.body = body
-        if pub_date is None:
-            pub_date = datetime.utcnow()
-        self.pub_date = pub_date
-        self.category = category
-        self.user = user
+    # def __init__(self, title, body, user, pub_date=None, *args, **kwargs):
+    #     super(Idea, self).__init__(*args, **kwargs)
+    #     self.title = title
+    #     self.body = body
+    #     if pub_date is None:
+    #         pub_date = datetime.utcnow()
+    #     self.pub_date = pub_date
+    #     self.user = user.id
 
     def __repr__(self):
         return '<Idea %r>' % self.title

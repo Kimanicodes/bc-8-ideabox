@@ -1,0 +1,16 @@
+{% if current_user.is_authenticated %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if current_user.is_authenticated %}
+<h1>welcome</h1>
+{% endif %}
+
+
+
+{% endblock %}
+{% endif %}

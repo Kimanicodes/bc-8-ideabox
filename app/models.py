@@ -4,9 +4,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from werkzeug import generate_password_hash, check_password_hash
 from datetime import datetime
-from flask_login import UserMixin #LoginManager
-
-
+from flask_login import UserMixin  # LoginManager
 
 
 app = Flask(__name__)
@@ -40,13 +38,13 @@ class User(UserMixin, db.Model):
     pwdhash = db.Column(db.String(54))
 
     def __init__(self, username, first_name, last_name, email, password):
-         self.username = username.lower()
-         self.first_name = first_name
-         self.last_name = last_name
-         self.first_name = first_name
-         self.email = email.lower()
-         self.set_password(password)
- 
+        self.username = username.lower()
+        self.first_name = first_name
+        self.last_name = last_name
+        self.first_name = first_name
+        self.email = email.lower()
+        self.set_password(password)
+
     def set_password(self, password):
         self.pwdhash = generate_password_hash(password)
 
@@ -58,29 +56,35 @@ class User(UserMixin, db.Model):
 
 
 #@login_manager.user_loader
-#def user_loader(user_id):
+# def user_loader(user_id):
 #    return User.query.get(int(user_id))
 
 
 '''Creating the Ideas Model '''
 
 
-class Ideas(db.Model):
+class Idea(db.Model):
+    __tablename__ = 'idea'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
 
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship('Category', backref=db.backref('posts', lazy='dynamic'))
+    category = db.relationship(
+        'Category', backref=db.backref('ideas', lazy='dynamic'))
 
-    def __init__(self, title, body, category, pub_date=None):
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('ideas', lazy='dynamic'))
+
+    def __init__(self, title, body, category, user, pub_date=None):
         self.title = title
         self.body = body
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
         self.category = category
+        self.user = user
 
     def __repr__(self):
         return '<Idea %r>' % self.title
@@ -97,6 +101,29 @@ class Category(db.Model):
 
     def __repr__(self):
         return '<Category %r>' % self.name
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    line = db.Column(db.String(100))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship(
+        'User', backref=db.backref('comments', lazy='dynamic'))
+
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'))
+    idea = db.relationship(
+        'Idea', backref=db.backref('comments', lazy='dynamic'))
+
+
+class Vote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    upvote = db.Column(db.Integer)
+    downvote = db.Column(db.Integer)
+
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'))
+    idea = db.relationship('Idea', backref=db.backref('votes', lazy='dynamic'))
+
 
 if __name__ == "__main__":
     manager.run()

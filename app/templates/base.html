@@ -20,11 +20,24 @@
             <nav>
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="active"><a href = "{{ url_for('view_homepage')}}">Home</a>
+                    {% if not current_user.is_authenticated %}
                     </li>
                     <li role="presentation"><a href="{{ url_for('login')}}">Log In</a>
                     </li>
                     <li role="presentation"><a href = "{{ url_for('register')}}">Register</a>
                     </li>
+
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                    <li role="presentation"><a href = "{{ url_for('new_idea')}}">Got an Idea?</a>
+                    </li>
+                    <li role="presentation"><a href = "{{ url_for('feed')}}">Feed</a>
+                    </li>
+                    <li role="presentation"><a href = "{{ url_for('feed')}}">My Feed</a>
+                    </li>
+                    <li role="presentation"><a href = "{{ url_for('logout')}}">Log out</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <h3 class="text-muted">Python IdeaBox</h3>

@@ -1,34 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title> IdeaBox App</title>
- 
- 
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet
-    ">
-    <link href = "{{url_for('static', filename='css/main.css')}}" rel ='stylesheet'>
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
- 
-    <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href = "{{ url_for('view_homepage')}}">Home</a>
-                    </li>
-                    <li role="presentation"><a href="{{ url_for('login')}}">Log In</a>
-                    </li>
-                    <li role="presentation"><a href = "{{ url_for('logout')}}">Log Out</a>
-                    </li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">Python IdeaBox</h3>
-        </div>
+{% extends "base.html" %}
+
+{% block content %}
+
 
 
 

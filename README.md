@@ -17,6 +17,7 @@ To describe its primary features, the IdeaBox was built so that:
 
 This project was submitted as part of a learning process to Andela Kenya for the qualification of the 8th Cohort.
 The steps to have the project locally are:
+
 1. Create your virtual environment at a desired location on your local machine via `virtualenv venv`
 2. First clone the repository via `git clone https://github.com/Kimanicodes/bc-8-ideabox.git`
 3. Install its dependencied via `pip install -r requirements.txt`

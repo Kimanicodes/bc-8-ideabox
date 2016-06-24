@@ -17,15 +17,6 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 
-'''Flask Login Create Login Page Config'''
-"""login_manager = LoginManager()
-login_manager.session_protection = 'strong'
-login_manager.login_view = 'login' """
-
-'''Creating my models: users, ideas ,
-comments and an optional idea categories model later'''
-
-
 class User(UserMixin, db.Model):
 
     __tablename__ = 'user'
@@ -59,9 +50,6 @@ class User(UserMixin, db.Model):
         return ' < User %r >' % self.username
 
 
-#@login_manager.user_loader
-# def user_loader(user_id):
-#    return User.query.get(int(user_id))
 
 
 '''Creating the Ideas Model '''
@@ -75,14 +63,6 @@ class Idea(db.Model):
     pub_date = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    # def __init__(self, title, body, user, pub_date=None, *args, **kwargs):
-    #     super(Idea, self).__init__(*args, **kwargs)
-    #     self.title = title
-    #     self.body = body
-    #     if pub_date is None:
-    #         pub_date = datetime.utcnow()
-    #     self.pub_date = pub_date
-    #     self.user = user.id
 
     def __repr__(self):
         return '<Idea %r>' % self.title

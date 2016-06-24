@@ -38,22 +38,6 @@ def view_homepage():
 @login_required
 def show():
     pass
-   # #flash('Please Login to continue!')
-   # # return redirect(url_for('login'))
-   # form = Idea()
-   # #ideas = Idea.query.order_by(Idea.timestamp.desc()).all()
-   # if form.validate_on_submit():
-   #     idea = Idea(title=form.title.data,
-   #     body=form.body.data, category = form.category.data)
-   #     db.session.add(idea)
-   #     db.session.commit
-   #     ideas = Idea.query.order_by(Idea.timestamp.desc()).all()
-   #     return redirect(url_for('show'))
-   #     
-   # return render_template('show.html', form=form)
-
-
-
 
 @app.route('/about')
 def view_about():
@@ -121,10 +105,6 @@ def logout():
 def home():
     return render_template('home.html')
 
-#@app.route('/secret')
-#@login_required
-# def secret():
-#    return 'Only authenticated users are allowed!'
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -143,14 +123,6 @@ def register():
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
-    #form = ShowSignUp(request.form)
-    # if request.method == 'POST' and form.validate():
-    #    user = User(form.username.data, form.first_name.data,form.last_name.data,form.email.data,
-    #                form.password.data)
-    #    db_session.add(user)
-    #    flash('Thank You for registering!')
-    #    return redirect(url_for('login'))
-    # return render_template('register.html', form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
